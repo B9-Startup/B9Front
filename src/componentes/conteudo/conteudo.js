@@ -1,9 +1,12 @@
 import React from 'react';
 import 'siimple';
+import { Main } from './style';
 
 const Conteudo = () => {
   return(
-    <div>conteudo</div>
+    <Main>
+      Conteudo
+    </Main>
   )
 }
 

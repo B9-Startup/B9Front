@@ -8,6 +8,7 @@ const App = () => {
     <React.Fragment>
       <Nav />
       <Menu />
+      <Conteudo />
     </React.Fragment>
   )
 }
