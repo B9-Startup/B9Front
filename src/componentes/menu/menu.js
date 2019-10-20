@@ -8,7 +8,7 @@ const Menu = () => {
       <div class="siimple-list" style={{maxWidth: '300px'}}>
         <div class="siimple-list-item siimple--bg-white"><a href="/">Home</a></div>
         <div class="siimple-list-item siimple--bg-white"><a href="/projetos">Projetos</a></div>
-        <div class="siimple-list-item siimple--bg-white">Tarefas</div>
+        <div class="siimple-list-item siimple--bg-white"><a href="/tarefas">Tarefas</a></div>
         <div class="siimple-list-item siimple--bg-white">Arquivamento</div>
         <div class="siimple-list-item siimple--bg-white">Usuários</div>
       </div>

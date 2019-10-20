@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import 'siimple';
 import api from '../../services/api';
 
-const Modal = ({ fechaModal, projetoSelecionado }) => {
+const ModalProjeto = ({ fechaModal, projetoSelecionado }) => {
   const [nNome, setNNome] = useState(projetoSelecionado.nome);
   const [nDescricao, setNDescricao] = useState(projetoSelecionado.descricao);
   const [nUteis, setNUteis] = useState(projetoSelecionado.info_uteis);
@@ -17,17 +17,10 @@ const Modal = ({ fechaModal, projetoSelecionado }) => {
   const [nValorDisponivel, setNValorDisponivel] = useState(projetoSelecionado.valor_disponivel);
   const [nValorGasto, setNValorGasto] = useState(projetoSelecionado.valor_gasto);
   const [sucesso, setSucesso] = useState(false);
+  const [erro, setErro] = useState(false);
 
   async function salvarProjeto(id) {
-    const response = await api.post(`/projetos/${id}`, {
-      headers: {
-        'Ping-Other': 'pingpong',
-        'Content-Type': 'application/xml',
-        'Access-Control-Request-Method': 'PUT',
-        'Access-Control-Request-Headers': 'X-PINGOTHER, Content-Type',
-        'Access-Control-Allow-Origin': '*'
-      },
-      data: {
+    const response = await api.put(`/projetos/${id}`, {
         nome: nNome, 
         tipo_projeto: nTipoProjeto, 
         descricao: nDescricao,
@@ -41,18 +34,18 @@ const Modal = ({ fechaModal, projetoSelecionado }) => {
         tempo_gasto: nTempoGasto,
         valor_disponivel: nValorDisponivel,
         valor_gasto: nValorGasto
-      }
     })
 
-   if(response) {
-     console.log(response);
+   if(response && response.data && response.data.status !== 'error') {
+      window.location.href = '/projetos';
+   } else {
+      setErro(true);
    }
   }
 
   const novoNome = ev => {
     const { target: { value } } = ev;
     setNNome(value);
-    console.log(value)
   }
 
   const novaDescricao = ev => {
@@ -127,47 +120,44 @@ const Modal = ({ fechaModal, projetoSelecionado }) => {
           {!sucesso &&
             <React.Fragment>
               <label class="siimple-label">Nome: </label>
-              <input type="text" class="siimple-input" style={{ width: '90%' }} value={nNome} onChange={ev => novoNome(ev)} />
+              <input type="text" class="siimple-input" style={{ width: '100%' }} value={nNome} onChange={ev => novoNome(ev)} />
 
-              <label class="siimple-label" style={{ marginTop: '19px' }}>Descrição:</label>
-              <textarea class="siimple-textarea siimple-textarea--fluid" style={{ width: '86%', marginTop: '19px' }} value={nDescricao} onChange={ev => novaDescricao(ev)}></textarea>
+              <label class="siimple-label">Descrição:</label>
+              <textarea class="siimple-textarea siimple-textarea--fluid" style={{ width: '100%' }} value={nDescricao} onChange={ev => novaDescricao(ev)}></textarea>
 
-              <label class="siimple-label" style={{ marginTop: '19px' }}>Informações Uteis: </label>
-              <input type="text" class="siimple-input" style={{ width: '78%', marginTop: '19px' }} value={nUteis} onChange={ev => novoUteis(ev)} />
+              <label class="siimple-label">Informações Uteis: </label>
+              <input type="text" class="siimple-input" style={{ width: '100%', }} value={nUteis} onChange={ev => novoUteis(ev)} />
 
-              <label class="siimple-label" style={{ marginTop: '19px' }}>Prioridade: </label>
-              <input type="text" class="siimple-input" style={{ width: '85%', marginTop: '19px' }} value={nPrioridade} onChange={ev => novoPrioridade(ev)} />
+              <label class="siimple-label">Prioridade: </label>
+              <input type="text" class="siimple-input" style={{ width: '100%', }} value={nPrioridade} onChange={ev => novoPrioridade(ev)} />
 
-              <label class="siimple-label" style={{ marginTop: '19px' }}>Início Estimado: </label>
-              <input type="text" class="siimple-input" style={{ width: '80%', marginTop: '19px' }} value={nInicioEstimado} onChange={ev => novoInicioEstimado(ev)} />
+              <label class="siimple-label">Início Estimado: </label>
+              <input type="text" class="siimple-input" style={{ width: '100%', }} value={nInicioEstimado} onChange={ev => novoInicioEstimado(ev)} />
 
-              <label class="siimple-label" style={{ marginTop: '19px' }}>Início Real: </label>
-              <input type="text" class="siimple-input" style={{ width: '85%', marginTop: '19px' }} value={nInicioReal} onChange={ev => novoInicioReal(ev)} />
+              <label class="siimple-label">Início Real: </label>
+              <input type="text" class="siimple-input" style={{ width: '100%', }} value={nInicioReal} onChange={ev => novoInicioReal(ev)} />
 
-              <label class="siimple-label" style={{ marginTop: '19px' }}>Tempo Estimado: </label>
-              <input type="text" class="siimple-input" style={{ width: '79%', marginTop: '19px' }} value={nTempoEstimado} onChange={ev => novoTempoEstimado(ev)} />
+              <label class="siimple-label">Tempo Estimado: </label>
+              <input type="text" class="siimple-input" style={{ width: '100%', }} value={nTempoEstimado} onChange={ev => novoTempoEstimado(ev)} />
 
-              <label class="siimple-label" style={{ marginTop: '19px' }}>Tempo Gasto: </label>
-              <input type="text" class="siimple-input" style={{ width: '82%', marginTop: '19px' }} value={nTempoGasto} onChange={ev => novoTempoGasto(ev)} />
+              <label class="siimple-label">Tempo Gasto: </label>
+              <input type="text" class="siimple-input" style={{ width: '100%', }} value={nTempoGasto} onChange={ev => novoTempoGasto(ev)} />
 
-              <label class="siimple-label" style={{ marginTop: '19px' }}>Termino Estimado: </label>
-              <input type="text" class="siimple-input" style={{ width: '78%', marginTop: '19px' }} value={nTerminoEstimado} onChange={ev => novoTerminoEstimado(ev)} />
+              <label class="siimple-label">Termino Estimado: </label>
+              <input type="text" class="siimple-input" style={{ width: '100%', }} value={nTerminoEstimado} onChange={ev => novoTerminoEstimado(ev)} />
 
-              <label class="siimple-label" style={{ marginTop: '19px' }}>Termino Real: </label>
-              <input type="text" class="siimple-input" style={{ width: '82%', marginTop: '19px' }} value={nTerminoReal} onChange={ev => novoTerminoReal(ev)} />
+              <label class="siimple-label">Termino Real: </label>
+              <input type="text" class="siimple-input" style={{ width: '100%', }} value={nTerminoReal} onChange={ev => novoTerminoReal(ev)} />
 
-              <label class="siimple-label" style={{ marginTop: '19px' }}>Tipo Projeto: </label>
-              <input type="text" class="siimple-input" style={{ width: '83%', marginTop: '19px' }} value={nTipoProjeto} onChange={ev => novoTipoProjeto(ev)} />
+              <label class="siimple-label">Tipo Projeto: </label>
+              <input type="text" class="siimple-input" style={{ width: '100%', }} value={nTipoProjeto} onChange={ev => novoTipoProjeto(ev)} />
 
-              <label class="siimple-label" style={{ marginTop: '19px' }}>Valor Disponível: </label>
-              <input type="text" class="siimple-input" style={{ width: '79%', marginTop: '19px' }} value={nValorDisponivel} onChange={ev => novoValorDisponivel(ev)} />
+              <label class="siimple-label">Valor Disponível: </label>
+              <input type="text" class="siimple-input" style={{ width: '100%', }} value={nValorDisponivel} onChange={ev => novoValorDisponivel(ev)} />
 
-              <label class="siimple-label" style={{ marginTop: '19px' }}>Valor Gasto: </label>
-              <input type="text" class="siimple-input" style={{ width: '84%', marginTop: '19px' }} value={nValorGasto} onChange={ev => novoValorGasto(ev)} />
+              <label class="siimple-label">Valor Gasto: </label>
+              <input type="text" class="siimple-input" style={{ width: '100%', }} value={nValorGasto} onChange={ev => novoValorGasto(ev)} />
             </React.Fragment>
-          }
-          {sucesso &&
-            <div class="siimple-h2 siimple--color-primary">Editado com Sucesso</div>
           }
         </div>
 
@@ -175,10 +165,11 @@ const Modal = ({ fechaModal, projetoSelecionado }) => {
         <div class="siimple-modal-footer">
           <div class="siimple-btn siimple-btn--primary" onClick={fechaModal}>Fechar</div>
           <div class="siimple-btn siimple-btn--success" style={{ marginLeft: '11px' }} onClick={() => salvarProjeto(projetoSelecionado.id)}>Salvar</div>
+          {erro && <p class="siimple-p siimple--color-error" style={{marginTop: '5px'}}>Desculpe, algo deu errado, tente novamente mais tarde.</p>}
         </div>
       </div>
     </div>
   )
 }
 
-export default Modal;
+export default ModalProjeto;
