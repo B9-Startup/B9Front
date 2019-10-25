@@ -1,46 +1,72 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'siimple';
 import api from '../../services/api';
 
-const ModalProjeto = ({ fechaModal, projetoSelecionado }) => {
-  const [nNome, setNNome] = useState(projetoSelecionado.nome);
-  const [nDescricao, setNDescricao] = useState(projetoSelecionado.descricao);
-  const [nUteis, setNUteis] = useState(projetoSelecionado.info_uteis);
-  const [nPrioridade, setNPrioridade] = useState(projetoSelecionado.prioridade);
-  const [nInicioEstimado, setNInicioEstimado] = useState(projetoSelecionado.inicio_projeto);
-  const [nInicioReal, setNInicioReal] = useState(projetoSelecionado.inicio_real );
-  const [nTempoEstimado, setNTempoEstimado] = useState(projetoSelecionado.tempo_estimado);
-  const [nTempoGasto, setNTempoGasto] = useState(projetoSelecionado.tempo_gasto);
-  const [nTerminoEstimado, setNTerminoEstimado] = useState(projetoSelecionado.termino_estimado);
-  const [nTerminoReal, setNTerminoReal] = useState(projetoSelecionado.termino_real);
-  const [nTipoProjeto, setNTipoProjeto] = useState(projetoSelecionado.tipo_projeto);
-  const [nValorDisponivel, setNValorDisponivel] = useState(projetoSelecionado.valor_disponivel);
-  const [nValorGasto, setNValorGasto] = useState(projetoSelecionado.valor_gasto);
+const ModalProjeto = ({ fechaModal, projetoSelecionado, editar }) => {
+  const [nNome, setNNome] = useState(projetoSelecionado && projetoSelecionado.nome ? projetoSelecionado.nome : '');
+  const [nDescricao, setNDescricao] = useState(projetoSelecionado && projetoSelecionado.descricao ? projetoSelecionado.descricao : '');
+  const [nUteis, setNUteis] = useState(projetoSelecionado && projetoSelecionado.info_uteis ? projetoSelecionado.info_uteis : '');
+  const [nPrioridade, setNPrioridade] = useState(projetoSelecionado && projetoSelecionado.prioridade ? projetoSelecionado.prioridade : '');
+  const [nInicioEstimado, setNInicioEstimado] = useState(projetoSelecionado && projetoSelecionado.inicio_projeto ? projetoSelecionado.inicio_projeto : '');
+  const [nInicioReal, setNInicioReal] = useState(projetoSelecionado && projetoSelecionado.inicio_real ? projetoSelecionado.inicio_real : '');
+  const [nTempoEstimado, setNTempoEstimado] = useState(projetoSelecionado && projetoSelecionado.tempo_estimado ? projetoSelecionado.tempo_estimado : '');
+  const [nTempoGasto, setNTempoGasto] = useState(projetoSelecionado && projetoSelecionado.tempo_gasto ? projetoSelecionado.tempo_gasto : '');
+  const [nTerminoEstimado, setNTerminoEstimado] = useState(projetoSelecionado && projetoSelecionado.termino_estimado ? projetoSelecionado.termino_estimado : '');
+  const [nTerminoReal, setNTerminoReal] = useState(projetoSelecionado && projetoSelecionado.termino_real ? projetoSelecionado.termino_real : '');
+  const [nTipoProjeto, setNTipoProjeto] = useState(projetoSelecionado && projetoSelecionado.tipo_projeto ? projetoSelecionado.tipo_projeto : '');
+  const [nValorDisponivel, setNValorDisponivel] = useState(projetoSelecionado && projetoSelecionado.valor_disponivel ? projetoSelecionado.valor_disponivel : '');
+  const [nValorGasto, setNValorGasto] = useState(projetoSelecionado && projetoSelecionado.valor_gasto ? projetoSelecionado.valor_gasto : '');
   const [sucesso, setSucesso] = useState(false);
   const [erro, setErro] = useState(false);
 
   async function salvarProjeto(id) {
     const response = await api.put(`/projetos/${id}`, {
-        nome: nNome, 
-        tipo_projeto: nTipoProjeto, 
-        descricao: nDescricao,
-        prioridade: nPrioridade,
-        info_uteis: nUteis,
-        inicio_projeto: nInicioEstimado,
-        termino_estimado: nTerminoEstimado,
-        inicio_real: nInicioReal,
-        termino_real: nTerminoReal,
-        tempo_estimado: nTempoEstimado,
-        tempo_gasto: nTempoGasto,
-        valor_disponivel: nValorDisponivel,
-        valor_gasto: nValorGasto
+      nome: nNome,
+      tipo_projeto: nTipoProjeto,
+      descricao: nDescricao,
+      prioridade: nPrioridade,
+      info_uteis: nUteis,
+      inicio_projeto: nInicioEstimado,
+      termino_estimado: nTerminoEstimado,
+      inicio_real: nInicioReal,
+      termino_real: nTerminoReal,
+      tempo_estimado: nTempoEstimado,
+      tempo_gasto: nTempoGasto,
+      valor_disponivel: nValorDisponivel,
+      valor_gasto: nValorGasto
     })
 
-   if(response && response.data && response.data.status !== 'error') {
+    if (response && response.data && response.data.status !== 'error') {
       window.location.href = '/projetos';
-   } else {
+    } else {
       setErro(true);
-   }
+    }
+  }
+
+  async function inserirProjeto() {
+    const data = new FormData();
+        data.append('nome', nNome);
+        data.append('tipo_projeto', nTipoProjeto);
+        data.append('descricao', nDescricao);
+        data.append('prioridade', nPrioridade);
+        data.append('info_uteis', nUteis);
+        data.append('inicio_projeto', nInicioEstimado);
+        data.append('termino_estimado', nTerminoEstimado);
+        data.append('inicio_real', nInicioReal);
+        data.append('termino_real', nTerminoReal);
+        data.append('tempo_estimado', nTempoEstimado);
+        data.append('tempo_gasto', nTempoGasto);
+        data.append('valor_disponivel', nValorDisponivel);
+        data.append('valor_gasto', nValorGasto);
+    const response = await api.post('/projetos', data)
+
+    if (response && response.data && response.data.status !== 'error') {
+      window.location.href = '/projetos';
+      console.log(response)
+    } else {
+      setErro(true);
+      console.log(response)
+    }
   }
 
   const novoNome = ev => {
@@ -112,7 +138,7 @@ const ModalProjeto = ({ fechaModal, projetoSelecionado }) => {
     <div class="siimple-modal siimple-modal--medium" id="modal">
       <div class="siimple-modal-content">
         <div class="siimple-modal-header">
-          <div class="siimple-modal-header-title">{projetoSelecionado.nome}</div>
+          <div class="siimple-modal-header-title">{projetoSelecionado && projetoSelecionado.nome ? projetoSelecionado.nome : 'Inserir Projeto'}</div>
           <div class="siimple-modal-header-close" id="modal-close" onClick={fechaModal}></div>
         </div>
         <div class="siimple-modal-body">
@@ -164,8 +190,11 @@ const ModalProjeto = ({ fechaModal, projetoSelecionado }) => {
 
         <div class="siimple-modal-footer">
           <div class="siimple-btn siimple-btn--primary" onClick={fechaModal}>Fechar</div>
-          <div class="siimple-btn siimple-btn--success" style={{ marginLeft: '11px' }} onClick={() => salvarProjeto(projetoSelecionado.id)}>Salvar</div>
-          {erro && <p class="siimple-p siimple--color-error" style={{marginTop: '5px'}}>Desculpe, algo deu errado, tente novamente mais tarde.</p>}
+          { editar ? 
+            <div class="siimple-btn siimple-btn--success" style={{ marginLeft: '11px' }} onClick={() => salvarProjeto(projetoSelecionado.id)}>Salvar</div> :
+            <div class="siimple-btn siimple-btn--success" style={{ marginLeft: '11px' }} onClick={() => inserirProjeto()}>Salvar</div>
+          }
+          {erro && <p class="siimple-p siimple--color-error" style={{ marginTop: '5px' }}>Desculpe, algo deu errado, tente novamente mais tarde.</p>}
         </div>
       </div>
     </div>

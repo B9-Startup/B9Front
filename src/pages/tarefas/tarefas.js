@@ -5,12 +5,15 @@ import api from '../../services/api';
 import TarefasInfo from './tarefasInfo';
 import { Carregando } from '../projetos/style';
 import ModalTarefas from '../../reutilizados/modal/modalTarefas'
+import ModalExclusao from '../../reutilizados/modal/modalExclusao';
 
 const Tarefas = () => {
   const [resultado, setResultado] = useState();
   const [erro, setErro] = useState(false);
   const [openModal, setOpenModal] = useState(false);
-  const [tarefaSelecionada, setTarefaSelecionada] = useState() 
+  const [tarefaSelecionada, setTarefaSelecionada] = useState() ;
+  const [editar, setEditar] = useState(false);
+  const [excluir, setExcluir] = useState(false);
 
   async function chamaApi() {
     const response = await api.get('/tarefas', {
@@ -26,9 +29,8 @@ const Tarefas = () => {
     chamaApi();
   }, [])
 
-  async function apagarTarefa(tarefa){
-    if(tarefa) {
-      const id = tarefa.id
+  async function apagarTarefa(i){
+      const id = i.id
       const response = await api.delete(`/tarefas/${id}`, {
       })
   
@@ -37,25 +39,37 @@ const Tarefas = () => {
       } else {
         setErro(true);
       }
-    }
   }
 
   const abreModal = (i) => {
     setOpenModal(true);
     setTarefaSelecionada(i);
+    setEditar(true);
+  }
+
+  const modalInserir = () => {
+    setOpenModal(true);
+    setTarefaSelecionada(null);
+    setEditar(false);
+  }
+
+  const modalExcuir = (i) => {
+    setExcluir(true);
+    setTarefaSelecionada(i)
   }
 
   const fechaModal = () => {
     setOpenModal(false);
   }
 
-  useEffect(() => {
-    console.log(resultado)
-  })
+  const fecharModalExcluir = () => {
+    setExcluir(false);
+  }
 
   return (
     <React.Fragment>
       <Title texto="Tarefas" />
+      <div class="siimple-btn siimple-btn--success" onClick={modalInserir}>Adicionar</div>
       {!resultado &&
         <Carregando>
           <div class="siimple-spinner siimple-spinner--primary"></div>
@@ -66,7 +80,7 @@ const Tarefas = () => {
       {resultado &&
         <TarefasInfo 
           resultado={resultado} 
-          apagarTarefa={apagarTarefa}
+          apagarTarefa={modalExcuir}
           abreModal={abreModal}
         />
       }
@@ -74,6 +88,14 @@ const Tarefas = () => {
         <ModalTarefas 
           tarefaSelecionada={tarefaSelecionada} 
           fechaModal={fechaModal} 
+          editar={editar}
+        />
+      }
+       {excluir &&
+        <ModalExclusao 
+          fechaModal={fecharModalExcluir}
+          item={tarefaSelecionada}
+          excluir={apagarTarefa}
         />
       }
     </React.Fragment>
