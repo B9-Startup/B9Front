@@ -7,7 +7,6 @@ import Tarefas from './pages/tarefas';
 import Arquivamento from './pages/arquivamento';
 import Configuracoes from './pages/configuracoes';
 
-
 const Routes = () => {
     return(
         <BrowserRouter>
