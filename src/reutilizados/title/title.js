@@ -3,7 +3,7 @@ import 'siimple';
 
 const Title = ({ texto }) => {
   return(
-    <div class="siimple-h3">{texto ? texto : 'Defina o Texto'}</div>
+    <div className="siimple-h3">{texto ? texto : 'Defina o Texto'}</div>
   )
 }
 

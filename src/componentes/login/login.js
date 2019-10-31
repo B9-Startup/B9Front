@@ -37,38 +37,37 @@ const Login = () => {
           window.location.href = '/';
         } else {
           setErro(true)
-          console.log(response.data)
         }
     } else {
-      console.log(response)
+      console.log("Falhou");
     }
   }
 
   return (
     <Body>
-      <div class="siimple-content siimple-content--extra-small">
-        <div class="siimple--px-5 siimple--py-5">
-          <div class="siimple-h2 siimple--text-normal siimple--mb-1" align="center">
+      <div className="siimple-content siimple-content--extra-small">
+        <div className="siimple--px-5 siimple--py-5">
+          <div className="siimple-h2 siimple--text-normal siimple--mb-1" align="center">
             Login
         </div>
-          <div class="siimple-field">
-            <div class="siimple-field-label">Seu Login</div>
-            <input value={login} onChange={ev => pegaLogin(ev)} type="email" class="siimple-input siimple-input--fluid" placeholder="login" />
+          <div className="siimple-field">
+            <div className="siimple-field-label">Seu Login</div>
+            <input value={login} onChange={ev => pegaLogin(ev)} type="email" className="siimple-input siimple-input--fluid" placeholder="login" />
           </div>
-          <div class="siimple-field">
-            <div class="siimple-field-label">Sua Senha</div>
-            <input value={senha} onChange={pegaSenha} type="password" class="siimple-input siimple-input--fluid" placeholder="senha" />
-            <div class="siimple-field-helper">Caso tenha esquecido a sua senha entre em contato com o adminstrador.</div>
+          <div className="siimple-field">
+            <div className="siimple-field-label">Sua Senha</div>
+            <input value={senha} onChange={pegaSenha} type="password" className="siimple-input siimple-input--fluid" placeholder="senha" />
+            <div className="siimple-field-helper">Caso tenha esquecido a sua senha entre em contato com o adminstrador.</div>
           </div>
-          <div class="siimple-field">
-            <div class="siimple-btn siimple-btn--primary siimple-btn--fluid siimple--text-bold" onClick={buscarUsuario}>
+          <div className="siimple-field">
+            <div className="siimple-btn siimple-btn--primary siimple-btn--fluid siimple--text-bold" onClick={buscarUsuario}>
               Login
                 </div>
           </div>
-          {erro && <div class="siimple--color-error siimple--text-center">Usuario e/ou senha incorreto.</div>}
-          {/* <div class="siimple-card siimple--mt-5" align="center">
-            <div class="siimple-card-body">
-              Don't have an account? <a class="siimple-link">Create an account</a>.
+          {erro && <div className="siimple--color-error siimple--text-center">Usuario e/ou senha incorreto.</div>}
+          {/* <div className="siimple-card siimple--mt-5" align="center">
+            <div className="siimple-card-body">
+              Don't have an account? <a className="siimple-link">Create an account</a>.
                 </div>
           </div> */}
         </div>
@@ -77,4 +76,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default Login;

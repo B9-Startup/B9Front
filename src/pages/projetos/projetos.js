@@ -68,7 +68,7 @@ const Projetos = () => {
     <React.Fragment>
       {!resultado &&
         <Carregando>
-          <div class="siimple-spinner siimple-spinner--primary"></div>
+          <div className="siimple-spinner siimple-spinner--primary"></div>
           <p>Um momento...</p>
         </Carregando>
       }
@@ -76,8 +76,8 @@ const Projetos = () => {
       {resultado &&
         <React.Fragment>
           <Title texto={'Projetos'} />
-          <div class="siimple-btn siimple-btn--success" onClick={modalInserir}>Adicionar</div>
-          <div class="siimple-content">
+          <div className="siimple-btn siimple-btn--success" onClick={modalInserir}>Adicionar</div>
+          <div className="siimple-content">
             <div className="siimple-table siimple-table--border siimple-table--hover siimple-table--striped">
               <div className="siimple-table-header">
                 <div className="siimple-table-row">
@@ -97,7 +97,7 @@ const Projetos = () => {
                     <div className="siimple-table-cell">{i.tempo_gasto}</div>
                     <div className="siimple-table-cell siimple--text-center">
                       <div class="siimple-btn siimple-btn--primary" onClick={() => abreModal(i)}>Ver</div>
-                      <div style={{marginLeft: '5px'}} class="siimple-btn siimple-btn--error" onClick={() => modalExcuir(i)}>Excluir</div>
+                      <div style={{marginLeft: '5px'}} className="siimple-btn siimple-btn--error" onClick={() => modalExcuir(i)}>Excluir</div>
                     </div>
                   </div>
                 )}

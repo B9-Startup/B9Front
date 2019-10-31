@@ -8,7 +8,7 @@ const Conteudo = () => {
     <Main>
       <Routes />
     </Main>
-  )
-}
+  );
+};
 
 export default Conteudo;

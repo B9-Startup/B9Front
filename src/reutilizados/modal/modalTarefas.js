@@ -37,10 +37,8 @@ const ModalTarefas = ({ tarefaSelecionada, fechaModal, editar }) => {
 
    if(response && response.data && response.data.status !== 'error') {
       window.location.href = '/tarefas';
-      console.log(response)
    } else {
       setErro(true);
-      console.log(response)
    }
   }
 
@@ -65,7 +63,6 @@ const ModalTarefas = ({ tarefaSelecionada, fechaModal, editar }) => {
       window.location.href = '/tarefas';
     } else {
       setErro(true);
-      console.log(response)
     }
   }
 
@@ -135,50 +132,50 @@ const ModalTarefas = ({ tarefaSelecionada, fechaModal, editar }) => {
   }
 
   return (
-    <div class="siimple-modal siimple-modal--medium" id="modal">
-      <div class="siimple-modal-content">
-        <div class="siimple-modal-header">
-          <div class="siimple-modal-header-title">{tarefaSelecionada && tarefaSelecionada.titulo ? tarefaSelecionada.titulo : 'Adicionar tarefa'}</div>
-          <div class="siimple-modal-header-close" id="modal-close" onClick={fechaModal}></div>
+    <div className="siimple-modal siimple-modal--medium" id="modal">
+      <div className="siimple-modal-content">
+        <div className="siimple-modal-header">
+          <div className="siimple-modal-header-title">{tarefaSelecionada && tarefaSelecionada.titulo ? tarefaSelecionada.titulo : 'Adicionar tarefa'}</div>
+          <div className="siimple-modal-header-close" id="modal-close" onClick={fechaModal}></div>
         </div>
-        <div class="siimple-modal-body">
-          <label class="siimple-label">Título: </label>
-          <input type="text" class="siimple-input" style={{ width: '100%' }} value={nTitulo} onChange={ev => novoTitulo(ev)} />
-          <label class="siimple-label">Solicitante: </label>
-          <input type="text" class="siimple-input" style={{ width: '100%' }} value={nSolicitante} onChange={ev => novoSolicitante(ev)} />
-          <label class="siimple-label">Atribuido Para: </label>
-          <input type="text" class="siimple-input" style={{ width: '100%' }} value={nAtribuido} onChange={ev => novaAtribuicao(ev)} />
-          <label class="siimple-label">Andamento: </label>
-          <input type="text" class="siimple-input" style={{ width: '100%' }} value={nAndamento} onChange={ev => novoAndamento(ev)} />
-          <label class="siimple-label">Criado: </label>
-          <input type="text" class="siimple-input" style={{ width: '100%' }} value={nCriadoEm} onChange={ev => novoCriadoEm(ev)} />
-          <label class="siimple-label">Descrição: </label>
-          <textarea class="siimple-textarea" style={{ width: '100%' }} value={nDescricao} onChange={ev => novaDescricao(ev)} />
-          <label class="siimple-label">Esforço Estimado: </label>
-          <input type="text" class="siimple-input" style={{ width: '100%' }} value={nEsforcoEstimado} onChange={ev => novoEsforcoEstimado(ev)} />
-          <label class="siimple-label">Esforço Real: </label>
-          <input type="text" class="siimple-input" style={{ width: '100%' }} value={nEsforcoReal} onChange={ev => novoEsforcoReal(ev)} />
-          <label class="siimple-label">Início Estimado: </label>
-          <input type="text" class="siimple-input" style={{ width: '100%' }} value={nInicioEstimado} onChange={ev => novoInicioEstimado(ev)} />
-          <label class="siimple-label">Início Real: </label>
-          <input type="text" class="siimple-input" style={{ width: '100%' }} value={nInicioReal} onChange={ev => novoInicioReal(ev)} />
-          <label class="siimple-label">Tags: </label>
-          <input type="text" class="siimple-input" style={{ width: '100%' }} value={nTags} onChange={ev => novaTag(ev)} />
-          <label class="siimple-label">Termino Estimado: </label>
-          <input type="text" class="siimple-input" style={{ width: '100%' }} value={nTerminoEstimado} onChange={ev => novoTerminoEstimado(ev)} />
-          <label class="siimple-label">Termino Real: </label>
-          <input type="text" class="siimple-input" style={{ width: '100%' }} value={nTerminoReal} onChange={ev => novoTerminoReal(ev)} />
+        <div className="siimple-modal-body">
+          <label className="siimple-label">Título: </label>
+          <input type="text" className="siimple-input" style={{ width: '100%' }} value={nTitulo} onChange={ev => novoTitulo(ev)} />
+          <label className="siimple-label">Solicitante: </label>
+          <input type="text" className="siimple-input" style={{ width: '100%' }} value={nSolicitante} onChange={ev => novoSolicitante(ev)} />
+          <label className="siimple-label">Atribuido Para: </label>
+          <input type="text" className="siimple-input" style={{ width: '100%' }} value={nAtribuido} onChange={ev => novaAtribuicao(ev)} />
+          <label className="siimple-label">Andamento: </label>
+          <input type="text" className="siimple-input" style={{ width: '100%' }} value={nAndamento} onChange={ev => novoAndamento(ev)} />
+          <label className="siimple-label">Criado: </label>
+          <input type="date" className="siimple-input" style={{ width: '100%' }} value={nCriadoEm} onChange={ev => novoCriadoEm(ev)} />
+          <label className="siimple-label">Descrição: </label>
+          <textarea className="siimple-textarea" style={{ width: '100%' }} value={nDescricao} onChange={ev => novaDescricao(ev)} />
+          <label className="siimple-label">Esforço Estimado: </label>
+          <input type="time" className="siimple-input" style={{ width: '100%' }} value={nEsforcoEstimado} onChange={ev => novoEsforcoEstimado(ev)} />
+          <label className="siimple-label">Esforço Real: </label>
+          <input type="time" className="siimple-input" style={{ width: '100%' }} value={nEsforcoReal} onChange={ev => novoEsforcoReal(ev)} />
+          <label className="siimple-label">Início Estimado: </label>
+          <input type="date" className="siimple-input" style={{ width: '100%' }} value={nInicioEstimado} onChange={ev => novoInicioEstimado(ev)} />
+          <label className="siimple-label">Início Real: </label>
+          <input type="date" className="siimple-input" style={{ width: '100%' }} value={nInicioReal} onChange={ev => novoInicioReal(ev)} />
+          <label className="siimple-label">Tags: </label>
+          <input type="text" className="siimple-input" style={{ width: '100%' }} value={nTags} onChange={ev => novaTag(ev)} />
+          <label className="siimple-label">Termino Estimado: </label>
+          <input type="date" className="siimple-input" style={{ width: '100%' }} value={nTerminoEstimado} onChange={ev => novoTerminoEstimado(ev)} />
+          <label className="siimple-label">Termino Real: </label>
+          <input type="date" className="siimple-input" style={{ width: '100%' }} value={nTerminoReal} onChange={ev => novoTerminoReal(ev)} />
         </div>
 
 
-        <div class="siimple-modal-footer">
-        <div class="siimple-btn siimple-btn--primary" onClick={fechaModal}>Fechar</div>
+        <div className="siimple-modal-footer">
+        <div className="siimple-btn siimple-btn--primary" onClick={fechaModal}>Fechar</div>
         { editar ? 
-          <div class="siimple-btn siimple-btn--success" style={{ marginLeft: '11px' }} onClick={() => salvarTarefa(tarefaSelecionada.id)}>Salvar</div>
+          <div className="siimple-btn siimple-btn--success" style={{ marginLeft: '11px' }} onClick={() => salvarTarefa(tarefaSelecionada.id)}>Salvar</div>
           :
-          <div class="siimple-btn siimple-btn--success" style={{ marginLeft: '11px' }} onClick={() => inserirTarefa()}>Salvar</div>
+          <div className="siimple-btn siimple-btn--success" style={{ marginLeft: '11px' }} onClick={() => inserirTarefa()}>Salvar</div>
         }
-        {erro && <p class="siimple-p siimple--color-error" style={{marginTop: '5px'}}>Desculpe, algo deu errado, tente novamente mais tarde.</p>}
+        {erro && <p className="siimple-p siimple--color-error" style={{marginTop: '5px'}}>Desculpe, algo deu errado, tente novamente mais tarde.</p>}
       </div>
       </div>
     </div>

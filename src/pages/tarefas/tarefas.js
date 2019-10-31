@@ -21,7 +21,6 @@ const Tarefas = () => {
 
     if (response) {
       setResultado(response.data)
-      console.log(response)
     }
   }
 
@@ -69,14 +68,14 @@ const Tarefas = () => {
   return (
     <React.Fragment>
       <Title texto="Tarefas" />
-      <div class="siimple-btn siimple-btn--success" onClick={modalInserir}>Adicionar</div>
+      <div className="siimple-btn siimple-btn--success" onClick={modalInserir}>Adicionar</div>
       {!resultado &&
         <Carregando>
-          <div class="siimple-spinner siimple-spinner--primary"></div>
+          <div className="siimple-spinner siimple-spinner--primary"></div>
           <p>Um momento...</p>
         </Carregando>
       }
-      {erro  && <p class="siimple-p siimple--color-error" style={{marginTop: '5px'}}>Desculpe, algo deu errado, tente novamente mais tarde.</p>}
+      {erro  && <p className="siimple-p siimple--color-error" style={{marginTop: '5px'}}>Desculpe, algo deu errado, tente novamente mais tarde.</p>}
       {resultado &&
         <TarefasInfo 
           resultado={resultado} 

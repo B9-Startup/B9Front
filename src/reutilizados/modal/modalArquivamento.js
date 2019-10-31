@@ -18,7 +18,6 @@ const ModalArquivamento = ({ arquivamentoSelecionado, fechaModal, editar }) => {
       window.location.href = '/arquivamento';
    } else {
       setErro(true);
-      console.log(response)
    }
   }
 
@@ -32,7 +31,6 @@ const ModalArquivamento = ({ arquivamentoSelecionado, fechaModal, editar }) => {
       window.location.href = '/arquivamento';
     } else {
       setErro(true);
-      console.log(response)
     }
   }
 
@@ -49,27 +47,27 @@ const ModalArquivamento = ({ arquivamentoSelecionado, fechaModal, editar }) => {
  
 
   return (
-    <div class="siimple-modal siimple-modal--medium" id="modal">
-      <div class="siimple-modal-content">
-        <div class="siimple-modal-header">
-          <div class="siimple-modal-header-title">{arquivamentoSelecionado && arquivamentoSelecionado.nome ? arquivamentoSelecionado.nome : 'Adicionar Arquivamento'}</div>
-          <div class="siimple-modal-header-close" id="modal-close" onClick={fechaModal}></div>
+    <div className="siimple-modal siimple-modal--medium" id="modal">
+      <div className="siimple-modal-content">
+        <div className="siimple-modal-header">
+          <div className="siimple-modal-header-title">{arquivamentoSelecionado && arquivamentoSelecionado.nome ? arquivamentoSelecionado.nome : 'Adicionar Arquivamento'}</div>
+          <div className="siimple-modal-header-close" id="modal-close" onClick={fechaModal}></div>
         </div>
-        <div class="siimple-modal-body">
-          <label class="siimple-label">Nome: </label>
-          <input type="text" class="siimple-input" style={{ width: '100%' }} value={nNome} onChange={ev => novoNome(ev)} />
-          <label class="siimple-label">Descrição: </label>
-          <textarea class="siimple-textarea" style={{ width: '100%' }} value={nDescricao} onChange={ev => novaDescricao(ev)} />
+        <div className="siimple-modal-body">
+          <label className="siimple-label">Nome: </label>
+          <input type="text" className="siimple-input" style={{ width: '100%' }} value={nNome} onChange={ev => novoNome(ev)} />
+          <label className="siimple-label">Descrição: </label>
+          <textarea className="siimple-textarea" style={{ width: '100%' }} value={nDescricao} onChange={ev => novaDescricao(ev)} />
         </div>
       
-        <div class="siimple-modal-footer">
-        <div class="siimple-btn siimple-btn--primary" onClick={fechaModal}>Fechar</div>
+        <div className="siimple-modal-footer">
+        <div className="siimple-btn siimple-btn--primary" onClick={fechaModal}>Fechar</div>
         { editar ? 
-          <div class="siimple-btn siimple-btn--success" style={{ marginLeft: '11px' }} onClick={() => salvarArquivamento(arquivamentoSelecionado.id)}>Salvar</div>
+          <div className="siimple-btn siimple-btn--success" style={{ marginLeft: '11px' }} onClick={() => salvarArquivamento(arquivamentoSelecionado.id)}>Salvar</div>
           :
-          <div class="siimple-btn siimple-btn--success" style={{ marginLeft: '11px' }} onClick={() => inserirArquivamento()}>Salvar</div>
+          <div className="siimple-btn siimple-btn--success" style={{ marginLeft: '11px' }} onClick={() => inserirArquivamento()}>Salvar</div>
         }
-        {erro && <p class="siimple-p siimple--color-error" style={{marginTop: '5px'}}>Desculpe, algo deu errado, tente novamente mais tarde.</p>}
+        {erro && <p className="siimple-p siimple--color-error" style={{marginTop: '5px'}}>Desculpe, algo deu errado, tente novamente mais tarde.</p>}
       </div>
       </div>
     </div>

@@ -17,9 +17,6 @@ const App = () => {
     }
   })
 
-  
-  console.log(url);
-
   return(
     <React.Fragment>
       {exibir &&
