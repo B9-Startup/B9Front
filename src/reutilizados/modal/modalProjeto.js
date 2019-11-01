@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import 'siimple';
 import api from '../../services/api';
+import { Editor } from '@tinymce/tinymce-react';
+
 
 const ModalProjeto = ({ fechaModal, projetoSelecionado, editar }) => {
   const [nNome, setNNome] = useState(projetoSelecionado && projetoSelecionado.nome ? projetoSelecionado.nome : '');
@@ -45,19 +47,19 @@ const ModalProjeto = ({ fechaModal, projetoSelecionado, editar }) => {
 
   async function inserirProjeto() {
     const data = new FormData();
-        data.append('nome', nNome);
-        data.append('tipo_projeto', nTipoProjeto);
-        data.append('descricao', nDescricao);
-        data.append('prioridade', nPrioridade);
-        data.append('info_uteis', nUteis);
-        data.append('inicio_projeto', nInicioEstimado);
-        data.append('termino_estimado', nTerminoEstimado);
-        data.append('inicio_real', nInicioReal);
-        data.append('termino_real', nTerminoReal);
-        data.append('tempo_estimado', nTempoEstimado);
-        data.append('tempo_gasto', nTempoGasto);
-        data.append('valor_disponivel', nValorDisponivel);
-        data.append('valor_gasto', nValorGasto);
+    data.append('nome', nNome);
+    data.append('tipo_projeto', nTipoProjeto);
+    data.append('descricao', nDescricao);
+    data.append('prioridade', nPrioridade);
+    data.append('info_uteis', nUteis);
+    data.append('inicio_projeto', nInicioEstimado);
+    data.append('termino_estimado', nTerminoEstimado);
+    data.append('inicio_real', nInicioReal);
+    data.append('termino_real', nTerminoReal);
+    data.append('tempo_estimado', nTempoEstimado);
+    data.append('tempo_gasto', nTempoGasto);
+    data.append('valor_disponivel', nValorDisponivel);
+    data.append('valor_gasto', nValorGasto);
     const response = await api.post('/projetos', data)
 
     if (response && response.data && response.data.status !== 'error') {
@@ -72,9 +74,9 @@ const ModalProjeto = ({ fechaModal, projetoSelecionado, editar }) => {
     setNNome(value);
   }
 
-  const novaDescricao = ev => {
-    const { target: { value } } = ev;
-    setNDescricao(value);
+  const novaDescricao = (ev) => {
+    setNDescricao(ev);
+    console.log(ev)
   }
 
   const novoUteis = ev => {
@@ -147,7 +149,28 @@ const ModalProjeto = ({ fechaModal, projetoSelecionado, editar }) => {
               <input type="text" className="siimple-input" style={{ width: '100%' }} value={nNome} onChange={ev => novoNome(ev)} />
 
               <label className="siimple-label">Descrição:</label>
-              <textarea className="siimple-textarea siimple-textarea--fluid" style={{ width: '100%' }} value={nDescricao} onChange={ev => novaDescricao(ev)}></textarea>
+              <Editor
+                
+                apiKey="zgdpx17mslgu6d8tsbjgomickxyqioc3xqbqyaq5bkmfxl3z"
+                init={{ 
+                  height: 200, 
+                  menubar: false, 
+                  selector: 'textarea',
+                  plugins: [
+                    'advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker',
+                    'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
+                    'save table directionality emoticons template paste',
+                    'emoticons',
+                    'save'
+                  ],
+                  toolbar:
+                    'undo redo | formatselect | bold italic backcolor | \
+                    alignleft aligncenter alignright alignjustify | \
+                    bullist numlist outdent indent | removeformat | help'
+                }}
+              value={nDescricao}
+              onEditorChange={novaDescricao}
+              />
 
               <label className="siimple-label">Informações Uteis: </label>
               <input type="text" className="siimple-input" style={{ width: '100%', }} value={nUteis} onChange={ev => novoUteis(ev)} />
@@ -188,7 +211,7 @@ const ModalProjeto = ({ fechaModal, projetoSelecionado, editar }) => {
 
         <div className="siimple-modal-footer">
           <div className="siimple-btn siimple-btn--primary" onClick={fechaModal}>Fechar</div>
-          { editar ? 
+          {editar ?
             <div className="siimple-btn siimple-btn--success" style={{ marginLeft: '11px' }} onClick={() => salvarProjeto(projetoSelecionado.id)}>Salvar</div> :
             <div className="siimple-btn siimple-btn--success" style={{ marginLeft: '11px' }} onClick={() => inserirProjeto()}>Salvar</div>
           }

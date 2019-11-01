@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import 'siimple';
 import api from '../../services/api';
+import { Editor } from '@tinymce/tinymce-react';
 
 const ModalTarefas = ({ tarefaSelecionada, fechaModal, editar }) => {
   const [nAndamento, setNAndamento] = useState(tarefaSelecionada && tarefaSelecionada.andamento ? tarefaSelecionada.andamento : '');
@@ -20,43 +21,43 @@ const ModalTarefas = ({ tarefaSelecionada, fechaModal, editar }) => {
 
   async function salvarTarefa(id) {
     const response = await api.put(`/tarefas/${id}`, {
-        titulo: nTitulo,
-        andamento: nAndamento,
-        atribuido: nAtribuido,
-        criado_em: nCriadoEm,
-        descricao: nDescricao,
-        esforco_estimado: nEsforcoEstimado,
-        esforco_real: nEsforcoReal,
-        inicio_estimado: nInicioEstimado,
-        inicio_real: nInicioReal,
-        solicitante: nSolicitante,
-        tags: nTags,
-        termino_estimado: nTerminoEstimado,
-        termino_real: nTerminoReal,
+      titulo: nTitulo,
+      andamento: nAndamento,
+      atribuido: nAtribuido,
+      criado_em: nCriadoEm,
+      descricao: nDescricao,
+      esforco_estimado: nEsforcoEstimado,
+      esforco_real: nEsforcoReal,
+      inicio_estimado: nInicioEstimado,
+      inicio_real: nInicioReal,
+      solicitante: nSolicitante,
+      tags: nTags,
+      termino_estimado: nTerminoEstimado,
+      termino_real: nTerminoReal,
     })
 
-   if(response && response.data && response.data.status !== 'error') {
+    if (response && response.data && response.data.status !== 'error') {
       window.location.href = '/tarefas';
-   } else {
+    } else {
       setErro(true);
-   }
+    }
   }
 
   async function inserirTarefa() {
     const data = new FormData();
-        data.append('titulo', nTitulo);
-        data.append('criado_em', nCriadoEm);
-        data.append('solicitante', nSolicitante);
-        data.append('atribuido', nAtribuido);
-        data.append('descricao', nDescricao);
-        data.append('tags', nTags);
-        data.append('inicio_estimado', nInicioEstimado);
-        data.append('termino_estimado', nTerminoEstimado);
-        data.append('inicio_real', nInicioReal);
-        data.append('termino_real', nTerminoReal);
-        data.append('esforco_estimado', nEsforcoEstimado);
-        data.append('esforco_real', nEsforcoReal);
-        data.append('andamento', nAndamento);
+    data.append('titulo', nTitulo);
+    data.append('criado_em', nCriadoEm);
+    data.append('solicitante', nSolicitante);
+    data.append('atribuido', nAtribuido);
+    data.append('descricao', nDescricao);
+    data.append('tags', nTags);
+    data.append('inicio_estimado', nInicioEstimado);
+    data.append('termino_estimado', nTerminoEstimado);
+    data.append('inicio_real', nInicioReal);
+    data.append('termino_real', nTerminoReal);
+    data.append('esforco_estimado', nEsforcoEstimado);
+    data.append('esforco_real', nEsforcoReal);
+    data.append('andamento', nAndamento);
     const response = await api.post('/tarefas', data)
 
     if (response && response.data && response.data.status !== 'error') {
@@ -82,8 +83,7 @@ const ModalTarefas = ({ tarefaSelecionada, fechaModal, editar }) => {
   }
 
   const novaDescricao = ev => {
-    const { target: { value } } = ev;
-    setNDescricao(value);
+    setNDescricao(ev);
   }
 
   const novoEsforcoEstimado = ev => {
@@ -150,7 +150,27 @@ const ModalTarefas = ({ tarefaSelecionada, fechaModal, editar }) => {
           <label className="siimple-label">Criado: </label>
           <input type="date" className="siimple-input" style={{ width: '100%' }} value={nCriadoEm} onChange={ev => novoCriadoEm(ev)} />
           <label className="siimple-label">Descrição: </label>
-          <textarea className="siimple-textarea" style={{ width: '100%' }} value={nDescricao} onChange={ev => novaDescricao(ev)} />
+          <Editor
+            apiKey="zgdpx17mslgu6d8tsbjgomickxyqioc3xqbqyaq5bkmfxl3z"
+            init={{
+              height: 200,
+              menubar: false,
+              selector: 'textarea',
+              plugins: [
+                'advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker',
+                'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
+                'save table directionality emoticons template paste',
+                'emoticons',
+                'save'
+              ],
+              toolbar:
+                'undo redo | formatselect | bold italic backcolor | \
+                    alignleft aligncenter alignright alignjustify | \
+                    bullist numlist outdent indent | removeformat | help'
+            }}
+            value={nDescricao}
+            onEditorChange={novaDescricao}
+          />
           <label className="siimple-label">Esforço Estimado: </label>
           <input type="time" className="siimple-input" style={{ width: '100%' }} value={nEsforcoEstimado} onChange={ev => novoEsforcoEstimado(ev)} />
           <label className="siimple-label">Esforço Real: </label>
@@ -169,14 +189,14 @@ const ModalTarefas = ({ tarefaSelecionada, fechaModal, editar }) => {
 
 
         <div className="siimple-modal-footer">
-        <div className="siimple-btn siimple-btn--primary" onClick={fechaModal}>Fechar</div>
-        { editar ? 
-          <div className="siimple-btn siimple-btn--success" style={{ marginLeft: '11px' }} onClick={() => salvarTarefa(tarefaSelecionada.id)}>Salvar</div>
-          :
-          <div className="siimple-btn siimple-btn--success" style={{ marginLeft: '11px' }} onClick={() => inserirTarefa()}>Salvar</div>
-        }
-        {erro && <p className="siimple-p siimple--color-error" style={{marginTop: '5px'}}>Desculpe, algo deu errado, tente novamente mais tarde.</p>}
-      </div>
+          <div className="siimple-btn siimple-btn--primary" onClick={fechaModal}>Fechar</div>
+          {editar ?
+            <div className="siimple-btn siimple-btn--success" style={{ marginLeft: '11px' }} onClick={() => salvarTarefa(tarefaSelecionada.id)}>Salvar</div>
+            :
+            <div className="siimple-btn siimple-btn--success" style={{ marginLeft: '11px' }} onClick={() => inserirTarefa()}>Salvar</div>
+          }
+          {erro && <p className="siimple-p siimple--color-error" style={{ marginTop: '5px' }}>Desculpe, algo deu errado, tente novamente mais tarde.</p>}
+        </div>
       </div>
     </div>
   )

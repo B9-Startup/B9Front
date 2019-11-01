@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import 'siimple';
 import api from '../../services/api';
+import { Editor } from '@tinymce/tinymce-react';
 
 const ModalArquivamento = ({ arquivamentoSelecionado, fechaModal, editar }) => {
   const [nNome, setNNome] = useState(arquivamentoSelecionado && arquivamentoSelecionado.nome ? arquivamentoSelecionado.nome : '');
@@ -40,8 +41,9 @@ const ModalArquivamento = ({ arquivamentoSelecionado, fechaModal, editar }) => {
   }
 
   const novaDescricao = ev => {
-    const { target: { value } } = ev;
-    setNDescricao(value);
+    // const { target: { value } } = ev;
+    setNDescricao(ev);
+    console.log(ev)
   }
 
  
@@ -57,7 +59,14 @@ const ModalArquivamento = ({ arquivamentoSelecionado, fechaModal, editar }) => {
           <label className="siimple-label">Nome: </label>
           <input type="text" className="siimple-input" style={{ width: '100%' }} value={nNome} onChange={ev => novoNome(ev)} />
           <label className="siimple-label">Descrição: </label>
-          <textarea className="siimple-textarea" style={{ width: '100%' }} value={nDescricao} onChange={ev => novaDescricao(ev)} />
+          <Editor
+            className="siimple-textarea"
+            type="text"
+            apiKey="zgdpx17mslgu6d8tsbjgomickxyqioc3xqbqyaq5bkmfxl3z"
+            init={{ height: 200, menubar: true }}
+            value={nDescricao}
+            onEditorChange={ev => novaDescricao(ev)}
+          />
         </div>
       
         <div className="siimple-modal-footer">

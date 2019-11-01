@@ -3,6 +3,7 @@ import { Carregando } from './style';
 import Modal from '../../reutilizados/modal';
 import Title from '../../reutilizados/title';
 import ModalExclusao from '../../reutilizados/modal/modalExclusao';
+import renderHTML from 'react-render-html';
 
 import api from '../../services/api';
 
@@ -92,7 +93,7 @@ const Projetos = () => {
                 {resultado.map((i, data) =>
                   <div key={data} className="siimple-table-row">
                     <div className="siimple-table-cell">{i.nome}</div>
-                    <div className="siimple-table-cell">{i.descricao}</div>
+                    <div className="siimple-table-cell">{renderHTML(i.descricao)}</div>
                     <div className="siimple-table-cell">{i.info_uteis}</div>
                     <div className="siimple-table-cell">{i.tempo_gasto}</div>
                     <div className="siimple-table-cell siimple--text-center">
